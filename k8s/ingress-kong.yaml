@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1beta1
+# UPDATE THE API
+kind: Ingress
+metadata:
+  name: ingress-kong-test
+  namespace: kong
+  annotations:
+    kubernetes.io/ingress.class: nginx 
+    # nginx.ingress.kubernetes.io/use-regex: 'true'
+    # konghq.com/regex-priority: "2"
+    # ADD THIS LINE ABOVE
+    # nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # UPDATE THIS LINE ABOVE
+    ingress.kubernetes.io/service-upstream: "true"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /kong
+          # UPDATE THIS LINE ABOVE
+            backend:
+              serviceName: kong-validation-webhook
+              servicePort: 443
+
